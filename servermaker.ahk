@@ -1,62 +1,37 @@
 #Include ./lib/INet.ahk
 
-global thiserror=0 ; Global various
+inputcheck("Server", "ì„œë²„ì£¼ì†Œ ì…ë ¥")
+inputcheck("User", "ì•„ì´ë”” ì…ë ¥")
+inputcheck("Pwd", "ë¹„ë°€ë²ˆí˜¸ ì…ë ¥")
+inputcheck("Port", "í¬íŠ¸ ì…ë ¥ (ê¸°ë³¸ê°’ 21)")
 
-loop{
-inputbox, server_i, ¼­¹öÁÖ¼Ò ÀÔ·Â
-inputcheck(server_i)
-	if(thiserror=0)
-		break
-}
-
-loop{
-inputbox, id_i, ¾ÆÀÌµğ ÀÔ·Â
-inputcheck(id_i)
-	if(thiserror=0)
-		break
-}
-
-loop{
-inputbox, pw_i, ºñ¹Ğ¹øÈ£ ÀÔ·Â
-inputcheck(pw_i)
-	if(thiserror=0)
-		break
-}
-
-loop{
-inputbox, port_i, Æ÷Æ® ÀÔ·Â (±âº»°ª 21),,,,,,,,,21
-inputcheck(port_i)
-	if(thiserror=0)
-		break
-}
-
-;Á¤º¸ ¹ŞÀº Åä´ë·Î FTP¼­ºñ½º Á¢±ÙµÇ¸é ÀúÀå
-Server = %server_i%
-User = %id_i%
-Pwd = %pw_i%
-Port = %port_i%
 INetOpen()
 hFTP := INetConnect(Server, Port, User, Pwd, "ftp")
 
-;Á¤º¸ ¹ŞÀº Åä´ë·Î iniÆÄÀÏ ÀÛ¼º
+;ì •ë³´ ë°›ì€ í† ëŒ€ë¡œ iniíŒŒì¼ ì‘ì„±
 if(hFTP)
 {
-IniWrite, %server_i%, ftp.ini,Server,Server
-IniWrite, %id_i%, ftp.ini,Server,User
-IniWrite, %pw_i%, ftp.ini,Server,Pwd
-IniWrite, %port_i%, ftp.ini,Server,Port
+IniWrite, %Server%, ftp.ini,Server,Server
+IniWrite, %User%, ftp.ini,Server,User
+IniWrite, %Pwd%, ftp.ini,Server,Pwd
+IniWrite, %Port%, ftp.ini,Server,Port
 INetCloseHandle(hFTP)
 INetClose()
-msgbox, ¼­¹öµî·ÏÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.
+msgbox, ì„œë²„ë“±ë¡ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.
 IfNotExist, .\send.txt
 	FileAppend,,send.txt
 }else{
 	INetClose()
-	msgbox, ¾Ë·ÁÁÖ½Å Á¤º¸·Î FTPÁ¢±Ù¿¡ ½ÇÆĞÇß½À´Ï´Ù.`nµû¶ó¼­ ÇØ´ç Á¤º¸´Â ÀúÀåÇÏÁö ¾Ê½À´Ï´Ù.`nServer = %Server%`nUser = %User%`nPort = %port% °¡ ¸Â´ÂÁö È®ÀÎÇØ ÁÖ¼¼¿ä.
+	msgbox, ì•Œë ¤ì£¼ì‹  ì •ë³´ë¡œ FTPì ‘ê·¼ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.`në”°ë¼ì„œ í•´ë‹¹ ì •ë³´ëŠ” ì €ì¥í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.`nServer = %Server%`nUser = %User%`nPort = %port% ê°€ ë§ëŠ”ì§€ í™•ì¸í•´ ì£¼ì„¸ìš”.
 }
 
-inputcheck(a){
-	thiserror=0
+inputcheck(a,b){
+	check:
+	if(a=="Port")
+	inputbox, %a%, %b%,,,,,,,,,21
+	else
+	inputbox, %a%, %b%
+	
 	If Errorlevel
 	{
 		ExitApp
@@ -65,8 +40,8 @@ inputcheck(a){
 	{
 		if(a==NULL)
 		{
-		msgbox, ºó³»¿ëÀÔ´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä
-		thiserror = 1
+		msgbox, ë¹ˆë‚´ìš©ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”
+		goto, check
 		}
 	}
 }
