@@ -1,14 +1,14 @@
 #Include ./lib/INet.ahk
 
-inputcheck("Server", "ì„œë²„ì£¼ì†Œ ì…ë ¥")
-inputcheck("User", "ì•„ì´ë”” ì…ë ¥")
-inputcheck("Pwd", "ë¹„ë°€ë²ˆí˜¸ ì…ë ¥")
-inputcheck("Port", "í¬íŠ¸ ì…ë ¥ (ê¸°ë³¸ê°’ 21)")
+inputcheck("Server", "¼­¹öÁÖ¼Ò ÀÔ·Â")
+inputcheck("User", "¾ÆÀÌµğ ÀÔ·Â")
+inputcheck("Pwd", "ºñ¹Ğ¹øÈ£ ÀÔ·Â")
+inputcheck("Port", "Æ÷Æ® ÀÔ·Â (±âº»°ª 21)")
 
 INetOpen()
 hFTP := INetConnect(Server, Port, User, Pwd, "ftp")
 
-;ì •ë³´ ë°›ì€ í† ëŒ€ë¡œ iniíŒŒì¼ ì‘ì„±
+;Á¤º¸ ¹ŞÀº Åä´ë·Î iniÆÄÀÏ ÀÛ¼º
 if(hFTP)
 {
 IniWrite, %Server%, ftp.ini,Server,Server
@@ -17,12 +17,12 @@ IniWrite, %Pwd%, ftp.ini,Server,Pwd
 IniWrite, %Port%, ftp.ini,Server,Port
 INetCloseHandle(hFTP)
 INetClose()
-msgbox, ì„œë²„ë“±ë¡ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.
+msgbox, ¼­¹öµî·ÏÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.
 IfNotExist, .\send.txt
 	FileAppend,,send.txt
 }else{
 	INetClose()
-	msgbox, ì•Œë ¤ì£¼ì‹  ì •ë³´ë¡œ FTPì ‘ê·¼ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.`në”°ë¼ì„œ í•´ë‹¹ ì •ë³´ëŠ” ì €ì¥í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.`nServer = %Server%`nUser = %User%`nPort = %port% ê°€ ë§ëŠ”ì§€ í™•ì¸í•´ ì£¼ì„¸ìš”.
+	msgbox, ¾Ë·ÁÁÖ½Å Á¤º¸·Î FTPÁ¢±Ù¿¡ ½ÇÆĞÇß½À´Ï´Ù.`nµû¶ó¼­ ÇØ´ç Á¤º¸´Â ÀúÀåÇÏÁö ¾Ê½À´Ï´Ù.`nServer = %Server%`nUser = %User%`nPort = %port% °¡ ¸Â´ÂÁö È®ÀÎÇØ ÁÖ¼¼¿ä.
 }
 
 inputcheck(a,b){
@@ -40,7 +40,7 @@ inputcheck(a,b){
 	{
 		if(a==NULL)
 		{
-		msgbox, ë¹ˆë‚´ìš©ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”
+		msgbox, ºó³»¿ëÀÔ´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä
 		goto, check
 		}
 	}
